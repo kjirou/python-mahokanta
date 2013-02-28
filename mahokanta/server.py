@@ -1,30 +1,26 @@
 # coding: utf-8
-from optparse import OptionParser
-from webob import Response
-from webob.dec import wsgify
+import logging
+from argparse import ArgumentParser
 from wsgiref.simple_server import make_server
+from .app import dump
 
+logger = logging.getLogger(__name__)
 
 def main():
 
-    parser = OptionParser()
-    parser.add_option('-p', '--port', dest='port', type='int', action='store', default=8080)
-    opts, args = parser.parse_args()
+    parser = ArgumentParser()
+    parser.add_argument('-p', '--port', 
+                        type=int,
+                        default=8080)
+    parser.add_argument('-H', '--host', 
+                        default='')
+    args = parser.parse_args()
 
-    @wsgify
-    def dump(request):
+    host = args.host
+    port = args.port
 
-        text = request.as_text()
-
-        # To console
-        print('--------')
-        print(text)
-        print('--------')
-
-        # To browser
-        return Response(text, content_type='text/plain')
-
-    httpd = make_server('', opts.port, dump)
+    httpd = make_server(host, port, dump)
+    logger.info('run on {host}:{port}'.format(host=host, port=port))
     httpd.serve_forever()
 
 
