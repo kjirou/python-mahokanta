@@ -1,39 +1,23 @@
-=====
-mjson
-=====
-
-This module is extended "python -mjson.tool".
+=========
+mahokanta
+=========
 
 
-Install
-----------
+Installation
+------------
 
 .. code-block:: bash
 
-   $ pip install mjson
+   $ pip install mahokanta
 
 
 How to use
 ----------
 
-Same the original
+At first, you need to start a server by the command following
 
 .. code-block:: bash
 
-   $ echo '{"a":1,"b":2}' | mjson
-   {
-       "a": 1, 
-       "b": 2
-   }
+   $ mahokanta
 
-
-Change indents
-
-.. code-block:: bash
-
-   $ echo '{"a":1,"b":2}' | mjson -i 2
-   {
-     "a": 1, 
-     "b": 2
-   }
-
+By way of experiment, when you access by browser, you can check your HTTP-Request in both page and console.
