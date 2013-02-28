@@ -1,27 +1,30 @@
 # coding: utf-8
+from optparse import OptionParser
+from webob import Response
 from webob.dec import wsgify
 from wsgiref.simple_server import make_server
 
 
 def main():
 
+    parser = OptionParser()
+    parser.add_option('-p', '--port', dest='port', type='int', action='store', default=8080)
+    opts, args = parser.parse_args()
+
     @wsgify
     def dump(request):
-        #print dir(request)
-        #print dict(request.headers)
-        #print request.text
-        # 一番見易い出し方
-        print request.as_text()
 
-        # 最後のこれは、何も print しなくても被アクセス毎に出る
-        # --------
-        # 1.0.0.127.in-addr.arpa - - [27/Feb/2013 20:10:31] "GET / HTTP/1.1" 200 2
-        # --------
+        text = request.as_text()
 
-        # ブラウザへのレスポンス
-        return "OK"
+        # To console
+        print('--------')
+        print(text)
+        print('--------')
 
-    httpd = make_server('', 8080, dump)
+        # To browser
+        return Response(text, content_type='text/plain')
+
+    httpd = make_server('', opts.port, dump)
     httpd.serve_forever()
 
 
