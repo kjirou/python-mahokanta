@@ -1,0 +1,13 @@
+*.db
+*.log
+*.orig
+*.pyc
+*.sqlite
+*.swp
+*.DS_Store
+.coverage
+env/
+
+
+*.egg-info/
+dist/*
